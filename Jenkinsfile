@@ -23,8 +23,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deployment steps go here (if any)
-                    echo 'Deployment completed successfully'
+                    // Intentional error in deployment steps
+                    sh 'echo "Simulating deployment error" && exit 1'
                 }
             }
         }
