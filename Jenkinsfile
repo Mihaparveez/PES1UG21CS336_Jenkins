@@ -1,27 +1,40 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('build'){
+    stages {
+        stage('Build') {
             steps {
-                build 'PES1UG21CS336-1'
-                sh 'g++ main.cpp -o output'
-            }
+                script {
+                    // Assuming 'PES1UG21CS336-1' is the name of your Jenkins job
+                    build job: 'PES1UG21CS336-1', wait: false
 
-        }
-        stage('test'){
-            steps{
-                sh './output'
+                    // Compile main.cpp using g++
+                    sh 'g++ main.cpp -o output'
+                }
             }
         }
-        stage('deploy'){
-            steps{
-                echo 'deploy'
+
+        stage('Test') {
+            steps {
+                script {
+                    // Run the compiled output
+                    sh './output'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                script {
+                    echo 'Deploy'
+                    // Add deployment steps if needed
+                }
             }
         }
     }
-    post{
-            failure{
-                error 'pipeline failed'
-            }
+
+    post {
+        failure {
+            error 'Pipeline failed'
+        }
     }
 }
