@@ -1,14 +1,12 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Assuming 'PES1UG21CS336-1' is the name of your Jenkins job
-                    build job: 'PES1UG21CS336-1', wait: false
-
-                    // Compile main.cpp using g++
-                    sh 'g++ main.cpp -o output'
+                    // Compile .cpp file using a shell script
+                    sh 'g++ -o myExecutable hello.cpp'
                 }
             }
         }
@@ -16,8 +14,8 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Run the compiled output
-                    sh './output'
+                    // Print output of .cpp file using a shell script
+                    sh './myExecutable'
                 }
             }
         }
@@ -25,8 +23,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo 'Deploy'
-                    // Add deployment steps if needed
+                    // Deployment steps go here (if any)
+                    echo 'Deployment completed successfully'
                 }
             }
         }
@@ -34,7 +32,15 @@ pipeline {
 
     post {
         failure {
-            error 'Pipeline failed'
+            echo 'Pipeline failed'
+            // Additional actions or notifications can be added here
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded'
+            // Additional actions or notifications for success can be added here
         }
     }
 }
