@@ -31,16 +31,14 @@ pipeline {
     }
 
     post {
-        failure {
-            echo 'Pipeline failed'
-            // Additional actions or notifications can be added here
-        }
-    }
-
-    post {
         success {
             echo 'Pipeline succeeded'
             // Additional actions or notifications for success can be added here
+        }
+
+        failure {
+            echo 'Pipeline failed'
+            // Additional actions or notifications can be added here
         }
     }
 }
